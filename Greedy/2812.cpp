@@ -1,37 +1,45 @@
 #include <iostream>
-#include <deque>
-#include <string>
-#define MAX 500001
+#include <stack>
 
 using namespace std;
-bool check = false;
+
+stack<int> S;
 
 int main(void)
 {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+	// 입출력을 빠르게 하기 위한 코드
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
 	int N, K;
+	string st; // 입력 받는 문자열
+	string ans;// 답을 출력해줄 ans
+	int count = 0;
+
 	cin >> N >> K;
-	string s;
-	cin >> s;
+	cin >> st;
 
-	deque<char> dq;
-	for (unsigned int i = 0; i < s.length(); i++)
+	for (int i = 0; i < (signed)st.length(); i++)
 	{
-		while (K && !dq.empty() && dq.back() < s[i])
+		while ((count < K) && !S.empty() && S.top() < st[i]) 
 		{
-			dq.pop_back();
-			K--;
+			S.pop();
+			count++;
 		}
-		dq.push_back(s[i]);
+		S.push(st[i]);
 	}
 
-	for (unsigned int i = 0; i < dq.size() - K; i++)
+	while (!S.empty())
 	{
-		cout << dq[i];
+		ans += S.top();
+		S.pop();
 	}
-	cout << "\n";
+
+	for (int i = (signed)ans.length() - 1; i >= (K-count); i--)
+	{
+		cout << ans[i];
+	}
 
 	return 0;
-}
+} 
