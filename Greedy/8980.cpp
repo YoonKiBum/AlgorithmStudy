@@ -43,22 +43,35 @@ int main(void)
 	}
 
 	sort(bag, bag + M, cmp); // second를 기준으로 정렬 대신 같은 경우 first를 기준으로 정렬
+	
 	int result = 0;
-
+	int k = 0;
 	for (int i = 0; i < M; i++)
 	{
-		int carry = 0;
-		for (int j = bag[i].first.first; j < bag[i].first.second; j++) 
-		{
-			carry = max(carry, arr[j]);
-		}
-
-		int left = min(bag[i].second, C - carry);
-		result += left;
-
+		int maxLoad = 0;
 		for (int j = bag[i].first.first; j < bag[i].first.second; j++)
 		{
-			arr[j] += left;
+			if (maxLoad < arr[j]) // 해당 루트에 있는 최대값 선택
+			{
+				maxLoad = arr[j];
+			}
+		}
+
+		int volume = 0;
+		if (maxLoad < C && C >= maxLoad + bag[i].second) // 최대 용량보다 해당 구간의 최대값 + 추가할 용량이 작은 경우
+		{
+			volume = bag[i].second;
+			result += volume;
+		}
+		else if(maxLoad < C && C < maxLoad + bag[i].second)// 최대 용량이 해당 구간의 최대값 + 추가할 용량보다 작은 경우
+		{
+			volume = C - maxLoad;
+			result += volume;
+		}
+
+		for (int j = bag[i].first.first; j < bag[i].first.second; j++) // 루트들을 조회하며 각 구간별로 volume을 더해준다.
+		{
+			arr[j] += volume;
 		}
 	}
 
