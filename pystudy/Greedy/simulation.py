@@ -1,7 +1,9 @@
 # N, M; °£´ÜϰÔ°ø ±â8·ÎÀ·Â¹Þ½
 N, M = map(int, input().split())
+
 # ½ÃÛ¡, ¹æ À·¹Þ½
 xPos, yPos, Direction = map(int, input().split())
+
 # ¹湮 ¿©ºθ¦ ǥÇÇ ÀÂ¿øºƮ d »ý= [[0] * M for _ in range(N)]
 d[xPos][yPos] = 1  # ½ÃÛ¡ 'ġ¸¦ ¹湮Ç °Í¸·Îǥ½Ã
 # ¸Êdº¸¸¦ ÆÇÇ ÀÂ¿øºƮ À·Â¹Þ½
@@ -40,11 +42,12 @@ while True:
         nx = xPos - dx[Direction]
         ny = yPos - dy[Direction]
         if array[nx][ny] == 0:
-            x = nx
-            y = ny
-            continue
+            xPos = nx
+            yPos = ny
         else:  # Ç´çöÌ¹ٴÙÎ°æ
             break
         num_of_turn = 0
+
 print(count)
+
 
